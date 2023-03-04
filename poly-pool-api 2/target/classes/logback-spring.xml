@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Logback 把日志进行分级分开来打以后方便进行日志排除错误 -->
+<configuration scan="true" scanPeriod="1 minutes">
+
+    <property name="NORMAL_MESSAGE_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}][%p][%t]- %c{80} :%m%n" />
+    <!-- LOG_ROOT_PATH_PREFIX为到项目环境为止的日志根目录默认不带项目名（独立版及特殊版本需带项目环境名），LOG_ROOT_PATH为到子服务为止的根目录 -->
+    <springProperty scop="context" name="LOG_ROOT_PATH_PREFIX" source="com.xbongbong.log.path" defaultValue="/acs/log"/>
+    <property name="LOG_ROOT_PATH" value="${LOG_ROOT_PATH_PREFIX}/pro-web-pc" />
+    <!--  [屏幕Appender] =====-->
+    <appender name="DEFAULT-CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${NORMAL_MESSAGE_PATTERN}</pattern>
+            <!-- 解决中文乱码问题 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- [DEBUG Appender] -->
+    <appender name="DEBUG-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROOT_PATH}/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>${NORMAL_MESSAGE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- [INFO Appender] -->
+    <appender name="INFO-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROOT_PATH}/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <pattern>${NORMAL_MESSAGE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- [WARN Appender] -->
+    <appender name="WARN-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROOT_PATH}/warn.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>${NORMAL_MESSAGE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- [ERROR Appender] -->
+    <appender name="ERROR-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROOT_PATH}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>${NORMAL_MESSAGE_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.ibatis" additivity="true">
+        <level value="debug" />
+    </logger>
+
+    <logger name="java.sql.Connection" additivity="true">
+        <level value="debug" />
+    </logger>
+
+    <logger name="java.sql.Statement" additivity="true">
+        <level value="debug" />
+    </logger>
+
+    <logger name="java.sql.PreparedStatement" additivity="true">
+        <level value="debug" />
+    </logger>
+
+    <logger name="java.sql.ResultSet" additivity="true">
+        <level value="debug" />
+    </logger>
+
+    <logger name="org.apache.http" additivity="true">
+        <level value="info" />
+    </logger>
+    <root>
+        <level value="debug" />
+        <!-- 本地输出到控制台 -->
+        <springProfile name="local">
+            <appender-ref ref="DEFAULT-CONSOLE" />
+        </springProfile>
+
+        <appender-ref ref="DEBUG-APPENDER" />
+        <appender-ref ref="INFO-APPENDER" />
+        <appender-ref ref="WARN-APPENDER" />
+        <appender-ref ref="ERROR-APPENDER" />
+    </root>
+</configuration>
