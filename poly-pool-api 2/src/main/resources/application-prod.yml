@@ -1,0 +1,31 @@
+#销帮帮接口参数
+xbb:
+  #销帮帮接口根域名
+  XBB_API_ROOT: https://proapi.xbongbong.com
+  #本公司corpid。接口基础参数，接口请求必传
+  CORP_ID: ding5617aab75fdf072b35c2f4657eb6378f
+  #本公司访问接口的token,该值相当于密钥，请妥善保管，不要泄露
+  TOKEN: 952d4a3d8c50d8f5605457bdb2331677
+  #接口操作人userId,接口基础参数。不传默认取超管角色
+  USER_ID: "215953196839859534"
+  #回调TOKEN
+  BACK_TOKEN: 123
+
+polyPool:
+  #接口地址
+  SERVER_URL: https://openapi.jushuitan.com
+  #应用KEY
+  APP_KEY: 018478aff17f4a1faf9a857d01023f12
+  #应用秘钥
+  APP_SECRET: c70674767b93450bb67389a02c02daf5
+  #应用授权码
+  CODE: 123456
+  ACCESS_TOKEN: fbf17232ff504dddbb3cae879bfffe53
+  REFRESH_ACCESS_TOKEN: b71b97c3d0fe4d5aa4da5c8c4d924ef7
+  FLUSH_TOKEN_TIME: 2592000
+
+#同步周期（1小时），单位毫秒
+period: 3600000
+
+enable:
+  scheduled: false
